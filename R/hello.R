@@ -22,9 +22,9 @@
 #' @export
 hello <- function(name = NULL, invisible = FALSE) {
   if (is.null(name)) {
-    ret = "Hello!"
+    ret <- "Hello!"
   } else {
-    ret = paste0("Hello ", name, "!")
+    ret <- paste0("Hello ", name, "!")
   }
   if (invisible) {
     return(invisible(ret))
