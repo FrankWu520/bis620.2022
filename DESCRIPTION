@@ -2,9 +2,9 @@ Package: bis620.2022
 Type: Package
 Title: Functions, Data, and Documentation for BIS620 (2022)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <michael.kane@yale.edu>
-Description: Captures functions, data, and documentation for BIS620 as taught in 2022.
+Author: Zhen Wu
+Maintainer: The package maintainer <zhen.wu@yale.edu>
+Description: Captures functions, data, and documentation for BIS620 in Fall 2022.
 License: LGPL (>= 2.1)
 Encoding: UTF-8
 RoxygenNote: 7.2.1
