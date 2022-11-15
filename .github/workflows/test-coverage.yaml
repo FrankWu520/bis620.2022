@@ -48,3 +48,8 @@ jobs:
         with:
           name: coverage-test-failures
           path: ${{ runner.temp }}/package
+
+      - name: Show coverage
+        run: |
+          covr::report()
+        shell: Rscript {0}

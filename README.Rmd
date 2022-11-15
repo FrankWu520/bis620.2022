@@ -20,7 +20,12 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/FrankWu520/bis620.2022/branch/main/graph/badge.svg)](https://app.codecov.io/gh/FrankWu520/bis620.2022?branch=main)
 <!-- badges: end -->
 
-The goal of bis620.2022 is to get the spectral signature of accelerometry data and plot UKBiobank accelerometry data. Using the function `spectral_signature()` in `spectral.R`, you can obtain the spectral signature of UKBiobank data, which is calculated by taking the modulus of the Fourier coefficients of the signal. The function takes a data setwith columns `X`, `Y`, `Z`, and `time`, and returns a data frame with the modulus of the Fourier coefficients for the X, Y, and Z channels. With the function `accel_plot()` in `plot.R`, you can plot UKBiobank accelerometry data. The function takes a data set that is assumed to have a `time`, `X`, `Y`, and `Z` column along with either a `time` or `freq` column, and returns a a time-series plot faceted by axis. I created this package to capture functions, data, and documentation for BIS620 class in Fall 2022.
+The goal of bis620.2022 is to get the spectral signature of accelerometry data and plot UKBiobank accelerometry data. I created this package to capture functions, data, and documentation for BIS620 class in Fall 2022.
+
+Using the function `spectral_signature()` in `spectral.R`, you can obtain the spectral signature of UKBiobank data, which is calculated by taking the modulus of the Fourier coefficients of the signal. The function takes a data setwith columns `X`, `Y`, `Z`, and `time`, and returns a data frame with the modulus of the Fourier coefficients for the X, Y, and Z channels.
+
+With the function `accel_plot()` in `plot.R`, you can plot UKBiobank accelerometry data. The function takes a data set that is assumed to have a `time`, `X`, `Y`, and `Z` column along with either a `time` or `freq` column, and returns a a time-series plot faceted by axis.
+
 
 ## Installation
 
@@ -31,13 +36,14 @@ You can install the development version of bis620.2022 from [GitHub](https://git
 devtools::install_github("FrankWu520/bis620.2022")
 ```
 
-## Example
+## Plot UKBiobank accelerometry data
 
-This is a basic example which shows you how to solve a common problem:
+This is a example which shows you how to create an accelerometry plot:
 
 ```{r example}
 library(bis620.2022)
-## basic example code
+data(ukb_accel)
+accel_plot(ukb_accel[1:1000,])
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
