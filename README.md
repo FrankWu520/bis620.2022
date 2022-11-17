@@ -41,8 +41,8 @@ devtools::install_github("FrankWu520/bis620.2022")
 
 ## Obtain Spectral Signature
 
-This is a example which shows you how to get the spectral signature of
-the accelerometry data:
+This example shows you how to get the spectral signature of the
+accelerometry data:
 
 ``` r
 library(bis620.2022)
@@ -67,7 +67,8 @@ spec_sig
 
 ## Plot Accelerometry Data
 
-This is a example which shows you how to create an accelerometry plot:
+This example shows you how to create an accelerometry plot for the
+accelerometry data:
 
 ``` r
 library(bis620.2022)
@@ -76,3 +77,15 @@ accel_plot(ukb_accel[1:1000, ])
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+This example shows you how to create an accelerometry plot for the
+spectral signature of the accelerometry data:
+
+``` r
+library(bis620.2022)
+data(ukb_accel)
+spec_sig <- spectral_signature(ukb_accel[1:100, ], take_log = TRUE)
+accel_plot(spec_sig)
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
