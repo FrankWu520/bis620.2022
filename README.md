@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/FrankWu520/bis620.2022/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FrankWu520/bis620.2022/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/FrankWu520/bis620.2022/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/FrankWu520/bis620.2022/actions/workflows/test-coverage.yaml)
 [![lint](https://github.com/FrankWu520/bis620.2022/actions/workflows/lint.yaml/badge.svg)](https://github.com/FrankWu520/bis620.2022/actions/workflows/lint.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/FrankWu520/bis620.2022/branch/master/graph/badge.svg)](https://app.codecov.io/gh/FrankWu520/bis620.2022?branch=master)
 <!-- badges: end -->
 
 The goal of bis620.2022 is to get the spectral signature of

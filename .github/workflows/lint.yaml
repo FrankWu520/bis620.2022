@@ -30,3 +30,6 @@ jobs:
         shell: Rscript {0}
         env:
           LINTR_ERROR_ON_LINT: true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
