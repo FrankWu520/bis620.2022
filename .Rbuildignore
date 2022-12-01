@@ -9,3 +9,5 @@
 ^\.git$
 ^README\.Rmd$
 ^codecov\.yml$
+^doc$
+^Meta$
