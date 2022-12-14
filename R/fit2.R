@@ -19,13 +19,14 @@ fit2 <- function(x) {
     filter(E_TOTPOP != 0) |>
     select(E_UNEMP, E_DISABL, E_LIMENG, E_MINRTY, E_NOHSDP, E_SNGPNT)
   model <- glm(E_UNEMP ~ E_DISABL + E_LIMENG + E_MINRTY + E_NOHSDP + E_SNGPNT,
-               data=x, family="poisson")
-  cov_model <- vcovHC(model, type="HC0")
+               data = x, family = "poisson")
+  cov_model <- vcovHC(model, type = "HC0")
   std_err <- sqrt(diag(cov_model))
-  rob_est <- cbind(Estimate= coef(model), "Robust SE" = std_err,
-                   "Pr(>|z|)" = 2 * pnorm(abs(coef(model)/std_err), lower.tail=FALSE),
+  rob_est <- cbind(Estimate = coef(model), "Robust SE" = std_err,
+                   "Pr(>|z|)" = 2 * pnorm(abs(coef(model) / std_err),
+                                          lower.tail = FALSE),
                    LL = coef(model) - 1.96 * std_err,
                    UL = coef(model) + 1.96 * std_err)
   print(rob_est)
-  print(pR2(model)['McFadden'])
+  print(pR2(model)["McFadden"])
 }

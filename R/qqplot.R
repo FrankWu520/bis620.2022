@@ -17,22 +17,20 @@ model_plot <- function(x, model) {
   x <- x |>
     filter(E_TOTPOP != 0)
   model1 <- glm(E_POV ~ E_DISABL + E_LIMENG + E_MINRTY + E_NOHSDP + E_SNGPNT,
-               data=x, family="poisson")
+               data = x, family = "poisson")
   model2 <- glm(E_UNEMP ~ E_DISABL + E_LIMENG + E_MINRTY + E_NOHSDP + E_SNGPNT,
-               data=x, family="poisson")
+               data = x, family = "poisson")
   model3 <- glm(E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY + E_NOHSDP + E_SNGPNT +
-                 E_UNEMP + E_POV + E_PCI, data=x, family="poisson")
+                 E_UNEMP + E_POV + E_PCI, data = x, family = "poisson")
   if (model == 1) {
     ggplot() +
       geom_qq(aes(sample = rstandard(model1))) +
       geom_abline(color = "red")
-  }
-  else if (model == 2) {
+  } else if (model == 2) {
     ggplot() +
       geom_qq(aes(sample = rstandard(model2))) +
       geom_abline(color = "red")
-  }
-  else {
+  } else {
     ggplot() +
       geom_qq(aes(sample = rstandard(model3))) +
       geom_abline(color = "red")

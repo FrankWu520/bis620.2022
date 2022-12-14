@@ -4,7 +4,8 @@
 \alias{fit3}
 \title{Create a Poisson Regression Model.
 This function creates a Poisson regression model:
-E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY+ E_NOHSDP + E_SNGPNT + E_UNEMP + E_POV + E_PCI}
+E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY+ E_NOHSDP + E_SNGPNT + E_UNEMP +
+E_POV + E_PCI}
 \usage{
 fit3(x)
 }
@@ -18,7 +19,8 @@ the correlation matrix for the variables.
 \description{
 Create a Poisson Regression Model.
 This function creates a Poisson regression model:
-E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY+ E_NOHSDP + E_SNGPNT + E_UNEMP + E_POV + E_PCI
+E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY+ E_NOHSDP + E_SNGPNT + E_UNEMP +
+E_POV + E_PCI
 }
 \examples{
 data(svi)
