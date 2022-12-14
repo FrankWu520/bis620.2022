@@ -5,10 +5,12 @@
 \title{Plot a Poisson Regression Model.
 This function plots a Poisson regression model:}
 \usage{
-model_plot(x, model)
+model_plot(x, y, model)
 }
 \arguments{
 \item{x}{an object inherited from svi data.frame.}
+
+\item{y}{an object inherited from covid data.frame.}
 
 \item{model}{which model should be plotted.}
 }
@@ -21,5 +23,6 @@ This function plots a Poisson regression model:
 }
 \examples{
 data(svi)
-model_plot(svi, model = 1)
+data(covid)
+model_plot(svi, covid, model = 1)
 }

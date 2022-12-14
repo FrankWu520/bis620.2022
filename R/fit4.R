@@ -1,29 +1,38 @@
 #' Create a Poisson Regression Model.
 #' This function creates a Poisson regression model:
-#' E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY+ E_NOHSDP + E_SNGPNT + E_UNEMP +
-#' E_POV + E_PCI
+#' E_CASE ~ E_DISABL + E_LIMENG + E_NOHSDP + E_SNGPNT + E_UNEMP + E_POV + E_PCI
 #' @param x an object inherited from svi data.frame.
+#' @param y an object inherited from covid data.frame.
 #' @return the summary table of the regression model, the pseudo r-squared,
 #' the correlation matrix for the variables.
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter group_by summarize across rename
 #' @importFrom stats glm coef pnorm
 #' @importFrom sandwich vcovHC
 #' @importFrom pscl pR2
 #' @examples
 #' data(svi)
-#' fit3(svi)
+#' data(covid)
+#' fit4(svi, covid)
 #' @export
 
-fit3 <- function(x) {
-  # Data cleaning
+fit4 <- function(x, y) {
+  # SVI data
   x[x == -999] <- NA
   x <- x |>
     filter(E_TOTPOP != 0) |>
-    select(E_CROWD, E_DISABL, E_LIMENG, E_MINRTY, E_NOHSDP, E_SNGPNT, E_UNEMP,
-           E_POV, E_PCI)
+    group_by(COUNTY) |>
+    summarize(across(c(E_DISABL, E_LIMENG, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV,
+                       E_PCI), sum), .groups = "drop")
+  # Covid data
+  y <- y |>
+    group_by(county) |>
+    summarize(E_CASE = sum(cases)) |>
+    rename(COUNTY = county)
+  # Merge data sets
+  xy <- merge(x, y, by = "COUNTY", all.x = TRUE)
   # Poisson regression model
-  model <- glm(E_CROWD ~ E_DISABL + E_LIMENG + E_MINRTY + E_NOHSDP + E_SNGPNT +
-                 E_UNEMP + E_POV + E_PCI, data = x, family = "poisson")
+  model <- glm(E_CASE ~ E_DISABL + E_LIMENG + E_NOHSDP + E_SNGPNT + E_UNEMP +
+                 E_POV + E_PCI, data = xy, family = "poisson")
   # Summary statistics
   cov_model <- vcovHC(model, type = "HC0")
   std_err <- sqrt(diag(cov_model))

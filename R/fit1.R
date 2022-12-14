@@ -14,12 +14,15 @@
 #' @export
 
 fit1 <- function(x) {
+  # Data cleaning
   x[x == -999] <- NA
   x <- x |>
     filter(E_TOTPOP != 0) |>
     select(E_POV, E_DISABL, E_LIMENG, E_MINRTY, E_NOHSDP, E_SNGPNT)
+  # Poisson regression model
   model <- glm(E_POV ~ E_DISABL + E_LIMENG + E_MINRTY + E_NOHSDP + E_SNGPNT,
                data = x, family = "poisson")
+  # Summary statistics
   cov_model <- vcovHC(model, type = "HC0")
   std_err <- sqrt(diag(cov_model))
   rob_est <- cbind(Estimate = coef(model), "Robust SE" = std_err,
