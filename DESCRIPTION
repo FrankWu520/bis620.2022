@@ -14,7 +14,10 @@ Imports:
   purrr,
   tidyr,
   sandwich,
-  pscl
+  pscl,
+  caret,
+  randomForest,
+  pROC
 Roxygen: list(markdown = TRUE)
 Depends: 
   R (>= 4.2)

@@ -26,12 +26,21 @@ test_that(
 )
 
 test_that(
-  "The fit3() returns a matrix object.",
+  "The fit4() returns a matrix object.",
   {
     data(svi)
     data(covid)
     f <- fit4(svi, covid)
     expect_true(inherits(f, "numeric"))
+  }
+)
+
+test_that(
+  "The rf() returns a mv.multiclass.roc object.",
+  {
+    data(svi)
+    rf <- rf(svi)
+    expect_true(inherits(rf, "mv.multiclass.roc"))
   }
 )
 

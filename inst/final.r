@@ -32,6 +32,8 @@ data(svi)
 fit1(svi)
 data(covid)
 fit4(svi, covid)
+data(svi)
+rf(svi)
 library(pscl)
 class(pR2(fit1)["McFadden"])
 

@@ -41,9 +41,7 @@ model_plot <- function(x, y, model) {
       geom_abline(color = "red")
   } else {
     # SVI data
-    x[x == -999] <- NA
     x <- x |>
-      filter(E_TOTPOP != 0) |>
       group_by(COUNTY) |>
       summarize(across(c(E_DISABL, E_LIMENG, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV,
                          E_PCI), sum), .groups = "drop")
