@@ -1,8 +1,9 @@
 ---
-title: "bis620"
+title: "Investigating Potential Predictors for Social Vulnerability and the Impact on COVID-19 Morbidity"
+author: "Zhen Wu, Jiacheng Ji, Jingjia Meng, Kenny Dong"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{bis620}
+  %\VignetteIndexEntry{Investigating Potential Predictors for Social Vulnerability and the Impact on COVID-19 Morbidity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +15,112 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{css, echo=FALSE}
+h1, h2, h3, h4 {
+  text-align: center;
+}
+
+p {
+  line-height: 2em;
+  text-indent: 30px;
+  text-align: justify;
+  font-size: 1.1em;
+}
+
+ol {
+  line-height: 2em;
+  text-align: justify;
+  font-size: 1.1em;
+}
+
+ul {
+  line-height: 2em;
+  text-align: justify;
+  font-size: 1.1em;
+}
+
+img {
+  width: 400px;
+  height: 300px;
+}
+```
+
+<h2>Introduction</h2>
+<p>
+Socioeconomic status has been significantly influencing one’s physical and mental well-being, access to essential resources, and living standards. In particular, the poverty rate in the United States increased by 1% to 11.4% in 2020 due to the COVID-19 pandemic, and 70% of the low-income people have to spend more than half of their income on housing[1]. Many counties have reported inefficient distribution of government assistance programs, such as rent relief and healthcare coverage. Therefore, we are motivated to examine the role of social vulnerability factors in predicting a county’s socioeconomic status and housing conditions, which are potential indicators of a community’s ability to prevent human suffering and financial loss in the event of a disaster. Recommendations on more systematic allocation of such resources can be proposed by studying the relationships, so that government assistance programs can be better directed to communities of a lower social rank primarily focusing on the factors identified. 
+</p>
+<p>
+Moreover, multiple research examining cardiovascular, respiratory, and other chronic diseases have demonstrated that lower community-level socioeconomic status is strongly associated with less desirable health outcomes[2]. The underlying association between socioeconomic factors and COVID-19 morbidity and mortality has also been revealed[3]. Particularly, households with low education and income levels, poor living standards, and residents of minority groups are most susceptible to the pandemic. Knowing this unpalatable fact, we are motivated to examine the association between different social determinants and COVID-19 morbidity from a county-level perspective. Moreover, with a clearer understanding of the association with COVID-19 cases, health officials can target these vulnerable communities for better allocation of healthcare resources and access to care services when the next pandemic hits.
+</p>
+<p>
+We aim to answer the following two research questions:
+</p>
+<ol>
+<li>What are the most significant predictors of a community’s socioeconomic status and living conditions?</li>
+<li>Are more socially vulnerable counties, in terms of socioeconomic status and culture, at a higher risk of COVID-19 incidence?</li>
+</ol>
+
+<h2>Data and Methods</h2>
+<p>
+We used the social vulnerability index (SVI) data from 2018 for this research. It was obtained from the Centers for Disease Control and Prevention’s Agency for Toxic Substances and Disease Registry website[cite?]. The data set contains 15 unique factors which fall under four general themes that measure a community’s social conditions, including socioeconomic, household composition & disability, minority status & language, and housing type & transportation. These together report the social vulnerability, which helps public health officials and governments to identify the communities that need the most support before, during, and after a hazardous event. This data set is informative and well-rounded because it includes different measures of the same variable. For example, estimates, margins of error, percentages, percentiles of ranking, and sums were all reported for the 15 factors.
+</p>
+<p>
+Since this 2018 SVI dataset contains more than 70,000 observations, we first replaced all -999 values with "NA" and removed all observations that have zero population to reduce the dimensions of this data. Poisson regression is the most appropriate type of generalized linear model to explore the impact of different predictors on a county’s socioeconomic status and living conditions respectively because the data are summarized as counts and are not normally distributed, as shown by the normal QQ plot in Appendix I[4]. The number of people below poverty <b>(E_POV)</b> and the number of people (age 16+) who are unemployed <b>(E_UNEMP)</b> are the two response variables selected to represent the socioeconomic status of a county. <b>E_DISABL, E_LIMENG,  E_MINRTY, E_NOHSDP, and E_SNGPNT</b> are predictors from the other three themes used to predict the responses (see Appendix I). Since housing is always the most valuable asset that a household owns, it usually provides informative measures of a household’s living standards. Therefore, we used the number of households that have more people than rooms <b>(E_CROWD)</b> as the response variable to estimate a county’s living conditions. We also included <b>E_POV</b> and <b>E_UNEMP</b> on top of the set of variables described above to predict the living conditions (see Appendix II).
+</p>
+<p>
+Standard errors were replaced by robust standard errors in the summary tables for each model because of the mild violation of mean and variance distribution assumptions[4]. McFadden’s pseudo-R-squared values are calculated to assess the amount of variability explained by our models because Poisson regression does not have an equivalent statistic to the R-squared value for ordinary least squares (OLS) regression. McFadden’s pseudo-R-squared is defined as $\dfrac{1-LL_{mod}}{LL_0}$, where $LL_{mod}$ is the log-likelihood of the fitted model and $LL_0$ is the log-likelihood of the null model which only includes the intercept term. Similar to the OLS R-squared, the model explains more variability in the response variable if the pseudo-R-squared value is close to 1. 
+</p>
+<p>
+Studies have shown that machine learning algorithms are rising alternatives for traditional parametric regressions[7]. Random forest could detect non-linearity in data that are often ignored by Poisson regression, which is also usually prone to over-dispersion of data. As a result, we conducted the random forest approach on our models and assessed its performance against the Poisson regression. The same data and variables are fed into the random forest model.
+</p>
+<p>
+The data set containing COVID-19 information was compiled by The New York Times [cite]. It is a time-series data that records morbidity and mortality cases for each county from January 1, 2020, to December 31, 2020. We preprocessed the data set by counting the total number of COVID-19 cases for each county <b>(E_CASE)</b>. This preprocessed data set was then merged with a subset of SVI data and grouped by “county name” recorded in Federal Information Processing Standard (FIPS) information published on the Federal Communications Commission website. The merged data set contains 11 variables, namely, <b>E_TOTPOP, E_CROWD, E_DISABL, E_LIMENG, E_MINRTY, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV, E_PCI, E_CASE</b> (see Appendix I).
+</p>
+<p>
+We performed a county-level Poisson regression on this merged data set to analyze the relationship between socioeconomic factors and the risk of COVID-19 incidence, with <b>E_CASE</b> as the dependent variable, <b>E_DISABL, E_LIMENG, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV, E_PCI</b> as the predictors. 
+</p>
+<h2>Results</h2>
+<h3>Poisson Regression</h3>
+
 ```{r setup}
 library(bis620.2022)
+library(devtools)
+document()
 ```
+
+```{r}
+data(svi)
+fit1(svi)
+```
+
+<h2>Discussion and Limitations</h2>
+
+<h2>Conclusion</h2>
+
+<h2 style="page-break-before: always;">References</h2>
+
+<h2 style="page-break-before: always;">Appendix</h2>
+<h3>Appendix I - Normal QQ-Plot</h3>
+```{r}
+data(svi)
+data(covid)
+model_plot(svi, covid, model = 1)
+model_plot(svi, covid, model = 2)
+model_plot(svi, covid, model = 3)
+model_plot(svi, covid, model = 4)
+```
+
+<h3>Appendix II</h3>
+<ul>
+<li><b>E_TOTPOP</b> - Population estimate</li>
+<li><b>E_CROWD</b> - At household level (occupied housing units), more people than rooms estimate</li>
+<li><b>E_DISABL</b> - Civilian non-institutionalized population with a disability estimate</li>
+<li><b>E_LIMENG</b> - Persons (age 5+) who speak English "less than well" estimate</li>
+<li><b>E_MINRTY</b> - Minority (all persons except white, non-Hispanic) estimate</li>
+<li><b>E_NOHSDP</b> - Persons (age 25+) with no high school diploma estimate</li>
+<li><b>E_SNGPNT</b> - Single parent household with children under 18 estimate</li>
+<li><b>E_UNEMP</b> - Civilian (age 16+) unemployed estimate</li>
+<li><b>E_POV</b> -  Person below poverty estimate</li>
+<li><b>E_PCI</b> - Per capita income estimate</li>
+<li><b>E_CASE</b> - Total number of COVID-19 cases for each county</li>
+</ul>

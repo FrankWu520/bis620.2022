@@ -39,7 +39,7 @@ test_that(
   "The rf() returns a mv.multiclass.roc object.",
   {
     data(svi)
-    rf <- rf(svi)
+    rf <- randforest(svi)
     expect_true(inherits(rf, "mv.multiclass.roc"))
   }
 )

@@ -12,10 +12,10 @@
 #' @importFrom pROC multiclass.roc
 #' @examples
 #' data(svi)
-#' rf(svi)
+#' randforest(svi)
 #' @export
 
-rf <- function(x) {
+randforest <- function(x) {
   # Data cleaning
   x[x == -999] <- NA
   x <- x|>
@@ -30,23 +30,34 @@ rf <- function(x) {
   x$EP_POV[(x$EP_POV < 0.25) & (x$EP_POV >= 0.1)] <- "Medium"
   x$EP_POV[x$EP_POV < 0.1] <- "Rich"
   # Prepare training set and test set
+  set.seed(2022)
   trainlist <- createDataPartition(x$EP_POV, p = 0.8, list = FALSE)
   trainset <- x[trainlist, ]
   testset <- x[-trainlist, ]
   # Random forest model
-  set.seed(2022)
   rf_train <- randomForest(as.factor(EP_POV) ~ ., data = trainset,
                            importance = TRUE)
-  # Plot error rate
-  plot(rf_train, main = "Error Rate vs Number of Trees")
+  print("Model Result")
+  print(rf_train)
   # Create confusion matrix
   rf_test <- predict(rf_train, newdata = testset, type = "class")
   con_mat <- confusionMatrix(as.factor(rf_test), as.factor(testset$EP_POV))
+  cat("\n")
+  cat("\n")
+  print("Predicting Result")
   print(con_mat)
   # Create ROC table
   rf_test2 <- predict(rf_train, newdata = testset, type = "prob")
+  cat("\n")
+  cat("\n")
+  print("ROC Table")
   print(head(rf_test2))
   # Find AUC score
   auc <- multiclass.roc(testset$EP_POV, rf_test2)
+  cat("\n")
+  cat("\n")
+  print("AUC Score")
   print(auc)
+  # Plot error rate
+  plot(rf_train, main = "Error vs Number of Trees")
 }
