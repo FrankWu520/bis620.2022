@@ -36,7 +36,7 @@ test_that(
 )
 
 test_that(
-  "The rf() returns a mv.multiclass.roc object.",
+  "The randforest() returns a mv.multiclass.roc object.",
   {
     data(svi)
     rf <- randforest(svi)

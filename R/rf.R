@@ -37,6 +37,9 @@ randforest <- function(x) {
   # Random forest model
   rf_train <- randomForest(as.factor(EP_POV) ~ ., data = trainset,
                            importance = TRUE)
+  # Plot error rate
+  plot(rf_train, main = "Error vs Number of Trees")
+  # Model result
   print("Model Result")
   print(rf_train)
   # Create confusion matrix
@@ -58,6 +61,4 @@ randforest <- function(x) {
   cat("\n")
   print("AUC Score")
   print(auc)
-  # Plot error rate
-  plot(rf_train, main = "Error vs Number of Trees")
 }
