@@ -21,42 +21,48 @@ h1, h2, h4 {
 }
 
 p {
-  line-height: 2em;
+  line-height: 1.5em;
   text-indent: 30px;
   text-align: justify;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 ol {
-  line-height: 2em;
+  line-height: 1.5em;
   text-align: justify;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 ul {
-  line-height: 2em;
+  line-height: 1.5em;
   text-align: justify;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 img {
   width: 400px;
   height: 300px;
 }
+
+sup {
+  vertical-align: baseline;
+  position: relative;
+  top: -0.4em;
+}
 ```
 
 <h2>Introduction</h2>
 <p>
-Socioeconomic status has been significantly influencing one’s physical and mental well-being, access to essential resources, and living standards. In particular, the poverty rate in the United States increased by 1% to 11.4% in 2020 due to the COVID-19 pandemic, and 70% of the low-income people have to spend more than half of their income on housing<sup>1</sup>. Many counties have reported inefficient distribution of government assistance programs, such as rent relief and healthcare coverage. Therefore, we are motivated to examine the role of social vulnerability factors in predicting a county’s socioeconomic status and housing conditions, which are potential indicators of a community’s ability to prevent human suffering and financial loss in the event of a disaster. Recommendations on more systematic allocation of such resources can be proposed by studying the relationships, so that government assistance programs can be better directed to communities of a lower social rank primarily focusing on the factors identified. 
+Socioeconomic status has been significantly influencing one’s physical and mental well-being, access to essential resources, and living standards. In particular, the poverty rate in the United States increased by 1% to 11.4% in 2020 due to the COVID-19 pandemic, and 70% of the low-income people have to spend more than half of their income on housing<sup>1</sup>. Many counties have reported inefficient distribution of government assistance programs, such as rent relief and healthcare coverage. Therefore, we are motivated to examine the role of social vulnerability factors in predicting a county’s socioeconomic status and housing conditions, which are potential indicators of a community’s ability to prevent human suffering and financial loss in the event of a disaster. Recommendations on more systematic allocation of such resources can be proposed by studying the relationships, so that government assistance programs can be better directed to communities of a lower social rank primarily focusing on the factors identified.
 </p>
 <p>
-Moreover, multiple research examining cardiovascular, respiratory, and other chronic diseases have demonstrated that lower community-level socioeconomic status is strongly associated with less desirable health outcomes<sup>2</sup>. The underlying association between socioeconomic factors and COVID-19 morbidity and mortality has also been revealed<sup>3</sup>. Particularly, households with low education and income levels, poor living standards, and residents of minority groups are most susceptible to the pandemic. Knowing this unpalatable fact, we are motivated to examine the association between different social determinants and COVID-19 morbidity from a county-level perspective. Moreover, with a clearer understanding of the association with COVID-19 cases, health officials can target these vulnerable communities for better allocation of healthcare resources and access to care services when the next pandemic hits.
+Moreover, multiple research examining cardiovascular, respiratory, and other chronic diseases have demonstrated that lower community-level socioeconomic status is strongly associated with less desirable health outcomes<sup>2</sup>. The underlying association between socioeconomic factors and COVID-19 morbidity and mortality has also been revealed<sup>3</sup>. Particularly, households with low education and income levels, poor living standards, and residents of minority groups are most susceptible to the pandemic. Knowing this unpalatable fact, we are motivated to examine the association between different social determinants and COVID-19 morbidity from a county-level perspective. Also, with a clearer understanding of the association with COVID-19 cases, health officials can target these vulnerable communities for better allocation of healthcare resources and access to care services when the next pandemic hits.
 </p>
 <p>
 We aim to answer the following two research questions:
 </p>
 <ol>
-<li>What are the most significant predictors of a community’s socioeconomic status and living conditions?</li>
+<li>What variables are most associated with a community’s socioeconomic status and living conditions?</li>
 <li>Are more socially vulnerable counties, in terms of socioeconomic status and culture, at a higher risk of COVID-19 incidence?</li>
 </ol>
 
@@ -68,50 +74,139 @@ We used the social vulnerability index (SVI) data from 2018 for this research. I
 Since this 2018 SVI dataset contains more than 70,000 observations, we first replaced all -999 values with "NA" and removed all observations that have zero population to reduce the dimensions of this data. Poisson regression is the most appropriate type of generalized linear model to explore the impact of different predictors on a county’s socioeconomic status and living conditions respectively because the data are summarized as counts and are not normally distributed, as shown by the normal QQ plot in Appendix I<sup>4</sup>. The number of people below poverty <b>(E_POV)</b> and the number of people (age 16+) who are unemployed <b>(E_UNEMP)</b> are the two response variables selected to represent the socioeconomic status of a county. <b>E_DISABL, E_LIMENG,  E_MINRTY, E_NOHSDP, and E_SNGPNT</b> are predictors from the other three themes used to predict the responses (see Appendix I). Since housing is always the most valuable asset that a household owns, it usually provides informative measures of a household’s living standards. Therefore, we used the number of households that have more people than rooms <b>(E_CROWD)</b> as the response variable to estimate a county’s living conditions. We also included <b>E_POV</b> and <b>E_UNEMP</b> on top of the set of variables described above to predict the living conditions (see Appendix II).
 </p>
 <p>
-Standard errors were replaced by robust standard errors in the summary tables for each model because of the mild violation of mean and variance distribution assumptions<sup>4</sup>. McFadden’s pseudo-R-squared values are calculated to assess the amount of variability explained by our models because Poisson regression does not have an equivalent statistic to the R-squared value for ordinary least squares (OLS) regression. McFadden’s pseudo-R-squared is defined as $\dfrac{1-LL_{mod}}{LL_0}$, where $LL_{mod}$ is the log-likelihood of the fitted model and $LL_0$ is the log-likelihood of the null model which only includes the intercept term. Similar to the OLS R-squared, the model explains more variability in the response variable if the pseudo-R-squared value is close to 1. 
+Standard errors were replaced by robust standard errors in the summary tables for each model because of the mild violation of mean and variance distribution assumptions<sup>4</sup>. McFadden’s pseudo-R-squared values are calculated to assess the amount of variability explained by our models because Poisson regression does not have an equivalent statistic to the R-squared value for ordinary least squares (OLS) regression. McFadden’s pseudo-R-squared is defined as $\frac{1-LL_{mod}}{LL_0}$, where $LL_{mod}$ is the log-likelihood of the fitted model and $LL_0$ is the log-likelihood of the null model which only includes the intercept term. Similar to the OLS R-squared, the model explains more variability in the response variable if the pseudo-R-squared value is close to 1.
 </p>
 <p>
 Studies have shown that machine learning algorithms are rising alternatives for traditional parametric regressions<sup>7</sup>. Random forest could detect non-linearity in data that is often ignored by Poisson regression, which is also usually prone to over-dispersion of data. As a result, we conducted the random forest approach on our models and assessed its performance against the Poisson regression. The same data and variables are fed into the random forest model.
 </p>
 <p>
-The data set containing COVID-19 information was compiled by The New York Times. It is a time-series data that records morbidity and mortality cases for each county from January 1, 2020, to December 31, 2020. We preprocessed the data set by counting the total number of COVID-19 cases for each county <b>(E_CASE)</b>. This preprocessed data set was then merged with a subset of SVI data and grouped by “county name” recorded in Federal Information Processing Standard (FIPS) information published on the Federal Communications Commission website. The merged data set contains 11 variables, namely, <b>E_TOTPOP, E_CROWD, E_DISABL, E_LIMENG, E_MINRTY, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV, E_PCI, E_CASE</b> (see Appendix I).
+The data set containing COVID-19 information was compiled by The New York Times. It is a time-series data that records morbidity and mortality cases for each county from January 1, 2020, to December 31, 2020. We preprocessed the data set by counting the total number of COVID-19 cases for each county <b>(E_CASE)</b>. This preprocessed data set was then merged with a subset of SVI data and grouped by "county name" recorded in Federal Information Processing Standard (FIPS) information published on the Federal Communications Commission website. The merged data set contains 11 variables, namely, <b>E_TOTPOP, E_CROWD, E_DISABL, E_LIMENG, E_MINRTY, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV, E_PCI, E_CASE</b> (see Appendix I).
 </p>
 <p>
-We performed a county-level Poisson regression on this merged data set to analyze the relationship between socioeconomic factors and the risk of COVID-19 incidence, with <b>E_CASE</b> as the dependent variable, <b>E_DISABL, E_LIMENG, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV, E_PCI</b> as the predictors. 
+We performed a county-level Poisson regression on this merged data set to analyze the relationship between socioeconomic factors and the risk of COVID-19 incidence, with <b>E_CASE</b> as the dependent variable, <b>E_DISABL, E_LIMENG, E_NOHSDP, E_SNGPNT, E_UNEMP, E_POV, E_PCI</b> as the predictors.
 </p>
 
 <h2>Results</h2>
 <h3>Poisson Regression</h3>
 
 ```{r setup}
+# Load useful packages
 library(bis620.2022)
 library(devtools)
 document()
+# Load the data sets
+data(svi)
+data(covid)
 ```
 
 ```{r}
-data(svi)
 fit1(svi)
 ```
+
 <p>
-As shown in the output above, all predictors other than the number of people who are not white and non-hispanic have p-values less than 0.05. We can interpret the model as for one unit increase in the number of civilians who have a disability, the difference in the logs of the expected number of people below poverty is expected to increase by 0.00021, while holding all other variables constant. Similarly, with one unit increase in the number of people who speak English “less than well”, the difference in the logs of the expected number of people below poverty is expected to decrease by 0.00007 while holding other variables constant. The coefficients of other variables can be interpreted in the same way. The intercept term suggests that the expected number of people below poverty for each county is 5.69 when all other variables are zero. The reported pseudo-R-squared value suggests that the variables explain 48% of the variability in the number of people below poverty.
+As shown in the output above, all predictors other than the number of people who are not white and non-Hispanic have p-values less than 0.05. We can interpret the model as for one unit increase in the number of civilians who have a disability, the difference in the logs of the expected number of people below poverty is expected to increase by 0.00021, while holding all other variables constant. Similarly, with one unit increase in the number of people who speak English "less than well", the difference in the logs of the expected number of people below poverty is expected to decrease by 0.00007 while holding other variables constant. The coefficients of other variables can be interpreted in the same way. The intercept term suggests that the expected number of people below poverty for each county is 5.69 when all other variables are zero. The reported pseudo-R-squared value suggests that the variables explain 48.24% of the variability in the number of people below poverty.
 </p>
+
 ```{r}
 fit2(svi)
 ```
+
 <p>
-From results observed above, all the predictors are statistically significant in predicting the number of county-level unemployment. However, the pseudo-R-squared value of this model is lower than the previous one, accounting for only 34.35% of the variation in the count of unemployed residents in each county. 
+From results observed above, all the predictors are statistically significant in predicting the number of county-level unemployment. However, the pseudo-R-squared value of this model is lower than the previous one, accounting for only 34.35% of the variation in the count of unemployed residents in each county.
 </p>
+
 ```{r}
 fit3(svi)
 ```
-The number of households that have residents more than its rooms was predicted by the above features chosen from each of the four themes in this data set. The single-parent households with children under 18 and the unemployed civilians are not statistically significant, which might be counter-intuitive because this variable is associated with the number of residents in the predictor. The reported pseudo-R-squared value for this model suggests that these factors accounted for 42.7% of the variation in E_CROWD. 
 
-<h2>Discussion and Limitations</h2>
+<p>
+The number of households that have residents more than its rooms was predicted by the above features chosen from each of the four themes in this data set. The single-parent households with children under 18 and the unemployed civilians are not statistically significant, which might be counter-intuitive because this variable is associated with the number of residents in the predictor. The reported pseudo-R-squared value for this model suggests that these factors accounted for 42.70% of the variation in <b>E_CROWD</b>.
+</p>
+
+<h3>Random Forest</h3>
+
+```{r}
+randforest(svi)
+```
+
+<p>
+From the plot, we observe that the error rate converges when the number of trees equals approximately 150 so that we can limit the range accordingly when optimizing the number of trees in the random forest.
+</p>
+<p>
+From the model result of the random forest model, the Out of Bag (OOB) error rate on training data is 29.89%, which is abnormally high and indicates poor prediction accuracy for counties with a poverty ratio greater or equal to 25%.
+</p>
+<p>
+In the predicting result, our model obtained a prediction accuracy of 0.7008. Also, conducting the random forest algorithm on the testing data set reveals that the model has a relatively high specificity $\left(\frac{\text{True Negative}}{\text{Negative}}\right)$ and low sensitivity value $\left(\frac{\text{True Positive}}{\text{Positive}}\right)$. The reported kappa is 0.5182, which suggests that there is a medium agreement between the predicted values and true outcomes.
+</p>
+<p>
+The ROC (Receiver Operating Characteristic) we got is far from 1. In some cases, it even falls out of the 0.5~1 range. But still, we have an AUC (Area Under ROC Curve) of 0.8576. It’s higher than 0.5, indicating our model does better than a random guess. Indeed 0.84 is not a low AUC in most cases as well, especially when we have multiple variables as input.
+</p>
+
+<h3>COVID-19 Analysis</h3>
+
+```{r}
+fit4(svi, covid)
+```
+
+<p>
+Based on the above Poisson model, people in the most vulnerable counties by language and disability had a greater risk of COVID-19 diagnosis, as <b>E_LIMENG</b> and <b>E_DISABL</b> are statistically significant (p-value below 0.05). However, vulnerability to other socioeconomic factors such as unemployment, high school diploma, household composition, and poverty was not associated with differential risk of COVID-19, contradicting our intuition that poor people are more exposed to the virus. Moreover, the reported pseudo-R-squared value for this model is the highest among four regressions, accounting for 58.74% of the variation in <b>E_CASE</b>.
+</p>
+
+<h2>Discussion and Limitation</h2>
+<h3>Poisson Regression</h3>
+<p>
+Overall, we found that all predictors except the number of people who either are not white or non-Hispanic in our model have statistically significant associations with the two factors that are representative of socioeconomic status: people below poverty and the number of unemployed. This result proved our hypothesis that the other three themes from the overall vulnerability measure are effective in predicting county-level socioeconomic status. Local governments can therefore use the most up-to-date data to forecast poverty lines and design assistance programs accordingly. For example, they may allocate more resources to providing essential needs like food and shelter to such areas. They may also implement financial policies to minimize the disparity between counties. In addition, predicting the unemployment rate is beneficial because it is often associated with suicide, mental health, and substance abuse<sup>8</sup>. The result is corroborated by other published research, that low socioeconomic status during childhood can elevate the probability of unemployment<sup>9</sup>. Since this effect is even more obvious among the young population, future research may focus on studying predictors for youth unemployment rates and the prolonged effects on individual health and behaviors.
+</p>
+<p>
+Furthermore, housing crowding plays an important role in social inequality. Children raised in poor living conditions can be negatively affected in terms of academic performance, social behaviors, as well as physical and mental health<sup>10</sup>. We have demonstrated that all predictors in the SVI are statistically significant except for the single-parent households and unemployed individuals. Therefore, government officials can use such social vulnerability data to predict housing crowding, particularly with a focus on areas where the young population constitutes a greater proportion. Housing programs such as expansion and relocation may help to minimize the negative impact on children.
+</p>
+<p>
+There are two limitations in our analysis. First, the pseudo-R-squared values were calculated based on the null model, ignoring all other predictors. This imposed a great amount of bias on our regression models and indicated a poor assessment of prediction accuracy. Second, the fact that all predictors are statistically significant in predicting the response might be due to possible confounding. For example, it’s likely for an individual who speaks English less than well to not graduate from high school, and people who have disabilities may need to live with their family, which could result in housing crowding. Even though regression could control some of the confounding effects, it can be further improved by stratification<sup>11</sup>. Further research could involve dividing each group into subgroups based on the confounding levels, followed by regression analysis on each subgroup. 
+</p>
+
+<h3>Random Forest</h3>
+<p>
+Our initiative for conducting random forest is to test if the machine learning model can make better predictions for counting data. We had an OOB error rate of 29.89% for training data and an accuracy of 0.7008 for testing data. The fact that the two numbers approximately add up to 1 shows that our data had great generality, and the performance of our model is consistent with little variance. The accuracy is rather high given the fact that we have multiple variables as input and it’s slightly higher than the performance of our regression.
+</p>
+<p>
+In addition, we found that our model has a relatively high specificity $\left(\frac{\text{True Negative}}{\text{Negative}}\right)$ and low sensitivity value $\left(\frac{\text{True Positive}}{\text{Positive}}\right)$. By looking at the confusion matrix we can also see that our model tends to wrongly estimate a county as a richer county instead of poorer. That is to say, our model is "skewed-richer". That’s an interesting finding and that also triggers what we plan to improve in further investigation. We plan to manipulate the boundary we have for poor/medium/rich counties. We will use 10% and 25% as the two splitting points according to the quartiles of EP_POV data. Manipulating the standard may increase the performance of our model further.
+</p>
+<p>
+The AUC (Area Under ROC Curve) of our model is rather high (0.8576). It means the probability that a random positive example is correctly positioned to the right of a random negative example is 85.76%
+</p>
+<p>
+One limitation of the random forest model is to grasp the sample size difference among counties, we use percentage data of count instead of the absolute number. However, as we already introduced in data collection, our data are primarily from surveys. There are biases while the data was collected. For example, for some counties, there are only 12 responses we collected, where having 6 of them reported certain attributes. It’s risky to make a generalization and infer that we have 50% of people in that county responding "yes" to that attribute.
+</p>
+
+<h3>COVID-19 Analysis</h3>
+<p>
+It is worth noting that there is a higher likelihood of detecting COVID-19 in communities that are more socially vulnerable in terms of limited language, besides from factors like disability. Limited language may imply minority status. These findings align with early reports that minorities have a higher prevalence and mortality rate from COVID-19: A significant disparity exists in the impact of COVID-19 on black communities in several US cities<sup>5</sup>. In Chicago, black individuals make up a disproportionate number of COVID-19 cases and deaths, despite comprising only 30% of the population. This disparity is particularly pronounced in certain neighborhoods on the city's South Side. Similar disparities are also evident in Louisiana and Michigan<sup>6</sup>, where black individuals have higher rates of COVID-19 cases and deaths compared to their representation in the overall population. In New York City, black and Hispanic individuals also experience disproportionate rates of COVID-19 deaths, accounting for 28% and 34% of deaths, respectively. Similarly, language as a dependent variable for COVID-19 cases can be supported by the example of Virginia. Language barrier poses threat to Latinos during COVID-19 vaccine distribution. In August 2021, more than 40% of confirmed corona virus cases in Virginia were from the Latino community. Yet, Latinos only make up about 10% of the state’s population. And now, there has been a significant decrease in COVID-19 cases among the Latino community in Virginia, which has been partially attributed to the availability of materials in Spanish. The Virginia Hispanic Chamber worked with health organizations to translate signs, pamphlets, and other materials into Spanish in an effort to mitigate the impact of COVID-19 on this population. As a result, the proportion of confirmed cases among Latinos has decreased to 15%.
+</p>
+<p>
+We list several conjectures below that could possibly explain our finding that may contribute to the higher risk of COVID-19 among individuals with limited English speaking skills:
+</p>
+<ol>
+<li>The disproportionate burden of underlying health conditions: People in minority groups and those with limited English proficiency may be more likely to have underlying health conditions that increase their risk of severe illness from COVID-19.</li>
+<li>Limited access to healthcare: Individuals with limited English proficiency may face barriers to accessing healthcare, such as language barriers or lack of insurance, which can make it more difficult to receive timely and appropriate medical treatment.</li>
+<li>Occupational exposures: Some minority groups may be over-represented in certain occupations that have a higher risk of COVID-19 exposure, such as essential workers in industries like agriculture, manufacturing, and healthcare.</li>
+<li>Social determinants of health: Limited English proficiency can often be tied to other social and economic factors that can impact health, such as poverty, inadequate housing, and lack of access to education, which are factors that contribute to increased vulnerability to COVID-19.</li>
+</ol>
+<p>
+The limitation for our COVID-19 analysis is similar to the above Poisson regression for socioeconomic and housing factors since we use the same type of regression model. Also, the conjectures do not fully explain the disparities in COVID-19 risk, and further research is needed to fully understand the complex interplay of factors that contribute to these disparities. 
+</p>
 
 <h2>Conclusion</h2>
 <p>
-In conclusion, based on our analysis, disability, English level, education(high school diploma), and household composition(single parent household) are factors that predict a community's socioeconomic status in terms of poverty and unemployment. Moreover, disability, English level, minority, education(high school diploma), wealth(poverty and per capita income) serve as good predictors for civilian living conditions in terms of household level. Furthermore, English level and disability are closely related with higher risk of COVID-19, which may imply that minority groups lack access to public health resources during the pandemic. As a result, our model could inform and assist the government to efficiently distribute financial and public health resources, and to carry out governmental assistance programs to communities with identified factors.
+In conclusion, based on our analysis, disability, English level, education (high school diploma), and household composition(single parent household) are factors that predict a community's socioeconomic status in terms of poverty and unemployment. Moreover, disability, English level, minority, education (high school diploma), wealth (poverty and per capita income) serve as good predictors for civilian living conditions in terms of household level. Furthermore, English level and disability are closely related with higher risk of COVID-19, which may imply that minority groups lack access to public health resources during the pandemic. 
+</p>
+<p>
+Therefore, for the goal of improving living conditions and reducing employment and poverty, our suggestions for the government include providing targeted financial assistance, such as increased access to education and training programs or temporary income support. Additionally, the government could implement policies that encourage businesses to hire and retain individuals with these disadvantaged backgrounds, such as tax credits or incentives. Other strategies could include expanding access to affordable child care, which can be a significant assistance to employment for single parents, or implementing job training and placement programs specifically designed to support people with lower levels of education. 
+</p>
+<p>
+The government could also consider implementing policies that increase the availability and accessibility of health care services for people with limited English proficiency or disabilities, such as by providing language interpretation services or making sure that physical locations and virtual platforms are fully accessible. Moreover, the government could work with providers to ensure that individuals with limited English proficiency or disabilities have equal access to COVID-19 vaccines and other preventive measures. By addressing the unique needs and challenges faced by these groups, the government can help reduce their risk of exposure to COVID-19 and improve their overall health outcomes.
+</p>
+<p>
+As a result, our model could inform and assist the government to efficiently allocate financial and public health resources to those most in need, and to carry out policies based on identified factors.
 </p>
 
 <h2 style="page-break-before: always;">References</h2>
